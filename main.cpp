@@ -41,16 +41,17 @@ int main()
     list<Goat> trip; // list of goats is called a trip?
 
     // my code
-    int choice = main_menu();
     bool again = true;
 
     while (again)
     {
+        int choice = main_menu();
         switch (choice)
         {
         case (1):
         {
             add_goat(trip, colors, names); // pass list of trips, colors[], names[]
+            cout << "Added goat!\n"; 
             break;
         }
         case (2):
@@ -80,7 +81,7 @@ int main()
 int main_menu()
 {
     int choice;
-    cout << "*** GOAT MANAGER 3001 ***\n[1] Add a goat\n[2] Delete a goat\n[3] List goats\n[4] Quit\nChoice --> ";
+    cout << "\n*** GOAT MANAGER 3001 ***\n[1] Add a goat\n[2] Delete a goat\n[3] List goats\n[4] Quit\nChoice --> ";
     cin >> choice;
     
     while (choice > 4 || choice < 1) // validation loop
@@ -98,7 +99,9 @@ void display_trip(list<Goat> trip) // displays all goats in the "trip"
         cout << "Trip is empty\n"; //infinite loop
         return;
     }
-    int i = 0; // keep track of iterations
+    int i = 1; // keep track of iterations
+    
+    cout << "\n"; //formatting
     for (auto it = trip.begin(); it != trip.end(); ++it, ++i) // for each element in trip
     {
         cout << "[" << i << "] " << it->get_name() << "(" << it->get_age() << ", " << it->get_color() << ")\n"; // messy to read line, outputs something like: [5] Lena (12, Teal)
@@ -108,7 +111,7 @@ void display_trip(list<Goat> trip) // displays all goats in the "trip"
 
 int select_goat(list<Goat> trip)
 {
-    int index = 0;
+    int index = -1;
 
     if (trip.size() > 0)
     {
@@ -126,14 +129,16 @@ int select_goat(list<Goat> trip)
     else // case empty trip
         cout << "No valid goats, try adding some first!\n";
 
-    return (index);
+    return (index-1);
 }
 
 void delete_goat(list<Goat> &trip)
 {
     int posToDelete = select_goat(trip); // correct implementation of select?
+    if(posToDelete == -1)
+        return; //no valid target
+    
     auto it = trip.begin();
-
     for (int i = 0; i < posToDelete; ++it, i++) // iterate "it" to correct location
     {
     }
@@ -143,11 +148,11 @@ void delete_goat(list<Goat> &trip)
 
 void add_goat(list<Goat> &trip, string colors[], string names[])
 {
-    Goat *temp = new Goat;
+    Goat temp;
 
-    temp->set_name(names[rand() % SZ_NAMES + 1]);    // set temp's name to a random index of names[] array (1-200)
-    temp->set_color(colors[rand() % SZ_COLORS + 1]); // set temp's color to a random index of colors[]] array (1-25)
-    temp->set_age(rand() % (MAX_AGE + 1));                // set temp age to random num 0-20
+    temp.set_name(names[rand() % SZ_NAMES + 1]);    // set temp's name to a random index of names[] array (1-200)
+    temp.set_color(colors[rand() % SZ_COLORS + 1]); // set temp's color to a random index of colors[]] array (1-25)
+    temp.set_age(rand() % (MAX_AGE + 1));                // set temp age to random num 0-20
 
-    trip.push_front(*temp); // add temp to the front of the list? Or back? could use push_back() in case of other.
+    trip.push_front(temp); // add temp to the front of the list? Or back? could use push_back() in case of other.
 }
