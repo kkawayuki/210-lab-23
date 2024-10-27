@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <random>
+#include <time.h> //for better randomization
 #include "Goat.h"
 using namespace std;
 
@@ -29,9 +31,55 @@ int main() {
     while (fin1 >> colors[i++]);
     fin1.close();
 
+    // note: names/colors arrays now full of values
+    
 
+    //my code
+    int choice = main_menu();
 
+    switch(choice)
+    {
+        case(1):
+        {
+            add_goat();
+            break;
+        }
+        case(2):
+        {
+            delete_goat();
+            break;
+        }
+        case(3):
+        {
+            display_trip(); 
+            break;
+        }   
+        case(4):
+        {
+            break;
+        }
+        // no default needed, as int choice validation is in main_menu() function
+    }
 
     return 0;
 }
 
+int main_menu()
+{
+    int choice;
+    cout << "*** GOAT MANAGER 3001 ***\n[1] Add a goat\n[2] Delete a goat\n[3] List goats\n[4] Quit\nChoice --> "; 
+    cin >> choice; 
+
+    while(choice > 4 || choice < 1) //validation loop
+    {
+        cout << "Invalid choice, please choose one (1-4): ";
+        cin >> choice;
+    }
+    return(choice);
+    
+}
+
+void display_trip() //displays all goats in the "trip"
+{
+
+}
