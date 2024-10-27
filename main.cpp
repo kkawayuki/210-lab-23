@@ -81,27 +81,29 @@ int main_menu()
 {
     int choice;
     cout << "*** GOAT MANAGER 3001 ***\n[1] Add a goat\n[2] Delete a goat\n[3] List goats\n[4] Quit\nChoice --> ";
+    cin >> choice;
+    
     while (choice > 4 || choice < 1) // validation loop
     {
-        cin >> choice;
         cout << "Invalid choice, please choose one (1-4): ";
+        cin >> choice;
     }
     return (choice);
 }
 
 void display_trip(list<Goat> trip) // displays all goats in the "trip"
 {
-    int i = 0; // keep track of iterations
-
     if (trip.empty())
-        cout << "Trip is empty\n";
-    else
     {
-        for (auto it = trip.begin(); it != trip.end(); ++it, ++i) // for each element in trip
-        {
-            cout << "[" << i << "] " << it->get_name() << "(" << it->get_age() << ", " << it->get_color() << ")\n"; // messy to read line, outputs something like: [5] Lena (12, Teal)
-        }
+        cout << "Trip is empty\n"; //infinite loop
+        return;
     }
+    int i = 0; // keep track of iterations
+    for (auto it = trip.begin(); it != trip.end(); ++it, ++i) // for each element in trip
+    {
+        cout << "[" << i << "] " << it->get_name() << "(" << it->get_age() << ", " << it->get_color() << ")\n"; // messy to read line, outputs something like: [5] Lena (12, Teal)
+    }
+    
 }
 
 int select_goat(list<Goat> trip)
