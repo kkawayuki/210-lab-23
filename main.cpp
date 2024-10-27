@@ -133,7 +133,7 @@ void display_trip(list<Goat> trip) // displays all goats in the "trip"
  ************************************************/
 int select_goat(list<Goat> trip)
 {
-    int index = -1;
+    int index = 0;
 
     if (trip.size() > 0)
     {
