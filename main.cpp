@@ -1,4 +1,4 @@
-// COMSC-210 | lab 22 | Kent Kawashima
+// COMSC-210 | lab 23 | Kent Kawashima
 // IDE used: Visual Studio Code
 #include <iostream>
 #include <fstream>
@@ -19,6 +19,9 @@ void add_goat(list<Goat> &trip, string colors[], string names[]);
 void display_trip(list<Goat> trip);
 int main_menu();
 
+/************************************************
+ * Function: Main
+ ************************************************/
 int main()
 {
     srand(time(0));
@@ -27,14 +30,12 @@ int main()
     ifstream fin("names.txt");
     string names[SZ_NAMES];
     int i = 0;
-    while (fin >> names[i++])
-        ;
+    while (fin >> names[i++]);
     fin.close();
     ifstream fin1("colors.txt");
     string colors[SZ_COLORS];
     i = 0;
-    while (fin1 >> colors[i++])
-        ;
+    while (fin1 >> colors[i++]);
     fin1.close();
 
     // note: names/colors arrays now full of values
@@ -76,8 +77,13 @@ int main()
     return 0;
 }
 
-// functions**********************************
-
+/************************************************
+ * Function: prints out the details of the menu
+ * for the menu-driven application
+ *
+ * Parameters: NONE
+ * Return: int, value corresponding to user desires
+ ************************************************/
 int main_menu()
 {
     int choice;
@@ -92,6 +98,13 @@ int main_menu()
     return (choice);
 }
 
+/************************************************
+ * Function: prints out the details and index
+ * of each goat in a list formatted nicely
+ *
+ * Parameters: trip, list of Goat objects
+ * Return: NONE
+ ************************************************/
 void display_trip(list<Goat> trip) // displays all goats in the "trip"
 {
     if (trip.empty())
@@ -109,6 +122,15 @@ void display_trip(list<Goat> trip) // displays all goats in the "trip"
     
 }
 
+/************************************************
+ * Function: prompts and returns a specific goat object for
+ * removal by the user, returning the input of user
+ * if it is valid
+ *
+ * Parameters: trip, list of Goat objects
+ * Return: int, value corresponding to user desired
+ * goat to remove from the list
+ ************************************************/
 int select_goat(list<Goat> trip)
 {
     int index = -1;
@@ -132,6 +154,13 @@ int select_goat(list<Goat> trip)
     return (index-1);
 }
 
+/************************************************
+ * Function: deletes a goat of specific index 
+ * specified by helper function select_goat()
+ *
+ * Parameters: trip, list of Goat objects
+ * Return: NONE
+ ************************************************/
 void delete_goat(list<Goat> &trip)
 {
     int posToDelete = select_goat(trip); // correct implementation of select?
@@ -146,6 +175,16 @@ void delete_goat(list<Goat> &trip)
     trip.erase(it);
 }
 
+/************************************************
+ * Function: adds a new Goat object to the list
+ * with a random name, age, and color
+ *
+ * Parameters: 
+ * trip, list of Goat objects
+ * colors[], array of possible goat colors
+ * names[], array of possible goat names
+ * Return: NONE
+ ************************************************/
 void add_goat(list<Goat> &trip, string colors[], string names[])
 {
     Goat temp;
