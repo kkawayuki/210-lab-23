@@ -15,7 +15,7 @@ const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 // function prototypes
 int select_goat(list<Goat> trip);
 void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string[], string[]);
+void add_goat(list<Goat> &trip, string colors[], string names[]);
 void display_trip(list<Goat> trip);
 int main_menu();
 
@@ -48,12 +48,12 @@ int main()
     {
     case (1):
     {
-        add_goat();
+        add_goat(trip, colors, names); //pass list of trips, colors[], names[]
         break;
     }
     case (2):
     {
-        delete_goat();
+        delete_goat(trip); //implement properly later? int returntype relevant? 
         break;
     }
     case (3):
@@ -104,7 +104,7 @@ void display_trip(list<Goat> trip) // displays all goats in the "trip"
 
 int select_goat(list<Goat> trip)
 {
-
+    //return integer of goat to delete
 }
 
 void delete_goat(list<Goat> &trip)
@@ -112,7 +112,12 @@ void delete_goat(list<Goat> &trip)
 
 }
 
-void add_goat(list<Goat> &trip, string[], string[])
+void add_goat(list<Goat> &trip, string colors[], string names[])
 {
-    
+    //logic to randomly construct+push goat
+    Goat *temp = new Goat;
+
+    temp->set_name(names[rand()%sizeof(names) + 1]); //set temp's name to a random index of names[] array (1-200)
+    temp->set_color(colors[rand()%sizeof(colors) + 1]); //set temp's color to a random index of colors[]] array (1-25)
+    temp->set_age(rand()%(MAX_AGE+1)); // set temp age to random num 0-20
 }
