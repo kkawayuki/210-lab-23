@@ -22,7 +22,6 @@ int main_menu();
 int main()
 {
     srand(time(0));
-    bool again;
 
     // read & populate arrays for names and colors
     ifstream fin("names.txt");
@@ -43,29 +42,34 @@ int main()
 
     // my code
     int choice = main_menu();
+    bool again = true;
 
-    switch (choice)
+    while (again)
     {
-    case (1):
-    {
-        add_goat(trip, colors, names); // pass list of trips, colors[], names[]
-        break;
-    }
-    case (2):
-    {
-        delete_goat(trip); // implement properly later? int returntype relevant?
-        break;
-    }
-    case (3):
-    {
-        display_trip(trip);
-        break;
-    }
-    case (4):
-    {
-        break;
-    }
-        // no default needed, as int choice validation is in main_menu() function
+        switch (choice)
+        {
+        case (1):
+        {
+            add_goat(trip, colors, names); // pass list of trips, colors[], names[]
+            break;
+        }
+        case (2):
+        {
+            delete_goat(trip); 
+            break;
+        }
+        case (3):
+        {
+            display_trip(trip);
+            break;
+        }
+        case (4): // break
+        {
+            again = false;
+            break;
+        }
+        //NOTE: no default needed, as int choice validation is in main_menu() function
+        }
     }
 
     return 0;
@@ -77,12 +81,10 @@ int main_menu()
 {
     int choice;
     cout << "*** GOAT MANAGER 3001 ***\n[1] Add a goat\n[2] Delete a goat\n[3] List goats\n[4] Quit\nChoice --> ";
-    cin >> choice;
-
     while (choice > 4 || choice < 1) // validation loop
     {
-        cout << "Invalid choice, please choose one (1-4): ";
         cin >> choice;
+        cout << "Invalid choice, please choose one (1-4): ";
     }
     return (choice);
 }
@@ -119,24 +121,30 @@ int select_goat(list<Goat> trip)
             cin >> index;
         }
     }
-    else //case empty trip
+    else // case empty trip
         cout << "No valid goats, try adding some first!\n";
-    
+
     return (index);
 }
 
 void delete_goat(list<Goat> &trip)
 {
-    int posToDelete = select_goat(trip); //correct implementation of select? 
-    trip.erase(posToDelete); //? not working 
+    int posToDelete = select_goat(trip); // correct implementation of select?
+    auto it = trip.begin();
+
+    for (int i = 0; i < posToDelete; ++it, i++) // iterate "it" to correct location
+    {
+    }
+
+    trip.erase(it);
 }
 
 void add_goat(list<Goat> &trip, string colors[], string names[])
 {
     Goat *temp = new Goat;
 
-    temp->set_name(names[rand() % sizeof(names) + 1]);    // set temp's name to a random index of names[] array (1-200)
-    temp->set_color(colors[rand() % sizeof(colors) + 1]); // set temp's color to a random index of colors[]] array (1-25)
+    temp->set_name(names[rand() % SZ_NAMES + 1]);    // set temp's name to a random index of names[] array (1-200)
+    temp->set_color(colors[rand() % SZ_COLORS + 1]); // set temp's color to a random index of colors[]] array (1-25)
     temp->set_age(rand() % (MAX_AGE + 1));                // set temp age to random num 0-20
 
     trip.push_front(*temp); // add temp to the front of the list? Or back? could use push_back() in case of other.
