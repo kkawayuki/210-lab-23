@@ -48,12 +48,12 @@ int main()
     {
     case (1):
     {
-        add_goat(trip, colors, names); //pass list of trips, colors[], names[]
+        add_goat(trip, colors, names); // pass list of trips, colors[], names[]
         break;
     }
     case (2):
     {
-        delete_goat(trip); //implement properly later? int returntype relevant? 
+        delete_goat(trip); // implement properly later? int returntype relevant?
         break;
     }
     case (3):
@@ -89,7 +89,7 @@ int main_menu()
 
 void display_trip(list<Goat> trip) // displays all goats in the "trip"
 {
-    int i = 0; //keep track of iterations
+    int i = 0; // keep track of iterations
 
     if (trip.empty())
         cout << "Trip is empty\n";
@@ -97,27 +97,47 @@ void display_trip(list<Goat> trip) // displays all goats in the "trip"
     {
         for (auto it = trip.begin(); it != trip.end(); ++it, ++i) // for each element in trip
         {
-            cout << "[" << i << "] " << it->get_name() << "(" << it->get_age() << ", " << it->get_color() << ")\n"; //messy to read line, outputs something like: [5] Lena (12, Teal)
+            cout << "[" << i << "] " << it->get_name() << "(" << it->get_age() << ", " << it->get_color() << ")\n"; // messy to read line, outputs something like: [5] Lena (12, Teal)
         }
     }
 }
 
 int select_goat(list<Goat> trip)
 {
-    //return integer of goat to delete
+    int index = 0;
+
+    if (trip.size() > 0)
+    {
+        display_trip(trip); // display list of all first
+
+        cout << "What is the index of the Goat that you want to remove: ";
+        cin >> index;
+
+        while (index > trip.size() || index < 1) // logic may be faulty
+        {
+            cout << "Please enter a valid value from 1-" << trip.size() << "! ";
+            cin >> index;
+        }
+    }
+    else //case empty trip
+        cout << "No valid goats, try adding some first!\n";
+    
+    return (index);
 }
 
 void delete_goat(list<Goat> &trip)
 {
-
+    int posToDelete = select_goat(trip); //correct implementation of select? 
+    trip.erase(posToDelete); //? not working 
 }
 
 void add_goat(list<Goat> &trip, string colors[], string names[])
 {
-    //logic to randomly construct+push goat
     Goat *temp = new Goat;
 
-    temp->set_name(names[rand()%sizeof(names) + 1]); //set temp's name to a random index of names[] array (1-200)
-    temp->set_color(colors[rand()%sizeof(colors) + 1]); //set temp's color to a random index of colors[]] array (1-25)
-    temp->set_age(rand()%(MAX_AGE+1)); // set temp age to random num 0-20
+    temp->set_name(names[rand() % sizeof(names) + 1]);    // set temp's name to a random index of names[] array (1-200)
+    temp->set_color(colors[rand() % sizeof(colors) + 1]); // set temp's color to a random index of colors[]] array (1-25)
+    temp->set_age(rand() % (MAX_AGE + 1));                // set temp age to random num 0-20
+
+    trip.push_front(*temp); // add temp to the front of the list? Or back? could use push_back() in case of other.
 }
